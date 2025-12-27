@@ -1,0 +1,371 @@
+@font-face {
+  font-family: "Brastika-Black";
+  src: url("fonts/Brastika-Black.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin-top: 126px;
+}
+
+/* Background images for each section */
+
+#Section-1 {
+  background-image: url("images/1.png");
+  height: 800px;
+}
+
+#Section-2 {
+  background-image: url("images/2.png");
+  height: 800px;
+}
+
+#Section-3 {
+  background-image: url("images/3.png");
+  height: 800px;
+}
+
+#Section-4 {
+  background-image: url("images/4.png");
+  height: 800px;
+}
+
+section {
+  padding: 70px 0;
+  background-size: cover;
+  text-align: center;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+/* Navbar */
+.navbar {
+  background-color: #ecdbd2;
+}
+
+nav img {
+  width: 150px;
+  position: relative;
+}
+
+nav ul hr {
+  display: none;
+}
+
+nav .content {
+  width: 100%;
+  display: flex; /* Enable Flexbox layout */
+  flex-direction: column;
+  justify-content: flex-end; /* Align child div to the right */
+}
+
+nav .links {
+  margin-left: auto;
+}
+
+nav .greet {
+  text-align: center;
+}
+
+nav .greet hr {
+  margin: 4px;
+}
+
+nav .greet p {
+  margin: 0;
+  padding: 4px 0;
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.nav-link {
+  font-family: "Gupter", serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+.curved-text {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
+}
+
+textPath {
+  font-family: "Julee", cursive;
+  font-weight: bold;
+  font-size: 2rem;
+  text-shadow: -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff,
+    1px 1px 0 #fff;
+  position: relative;
+  top: 10px;
+}
+
+section .main-title {
+  padding: 10px 0;
+  font-family: "Brastika-Black";
+  font-size: 6rem;
+  font-weight: bold;
+  font-style: normal;
+}
+
+section .description {
+  position: relative;
+  bottom: 60px;
+}
+
+#Section-1 svg {
+  position: relative;
+  top: 50px;
+}
+
+#Section-1 textPath {
+  fill: #f98db2;
+}
+
+#Section-1 .main-title {
+  color: #fccc73;
+}
+
+#Section-2 .content {
+  position: relative;
+  left: 5%;
+  bottom: 5%;
+}
+
+#Section-2 svg {
+  position: relative;
+  top: 20px;
+}
+
+#Section-2 textPath {
+  fill: #6f6c6d;
+}
+
+#Section-2 .main-title {
+  color: #99ab96;
+}
+
+#Section-3 svg {
+  position: relative;
+  top: 80px;
+}
+
+#Section-3 textPath {
+  fill: #99ac9f;
+}
+
+#Section-3 .main-title {
+  color: #ef8cad;
+}
+
+#Section-3 .content {
+  position: relative;
+  left: 23%;
+  bottom: 20%;
+}
+
+#Section-4 .main-title {
+  color: #ffffff;
+}
+
+p {
+  font-family: "Gupter", serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  font-style: normal;
+}
+
+#Section-4 .content {
+  position: relative;
+  bottom: 80px;
+}
+
+#Section-4 .main-title {
+  margin-bottom: 100px;
+}
+
+footer {
+  background-color: #dcc2ed;
+  width: 100%;
+  bottom: 0;
+  z-index: 1;
+}
+
+.footer {
+  padding: 0 0;
+}
+
+footer .btn-floating {
+  font-size: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.5rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+footer .btn-outline-dark {
+  border: 1px solid #343a40;
+  color: #343a40;
+  background-color: transparent;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+footer .btn-outline-dark:hover {
+  background-color: #343a40;
+  color: #fff;
+  transition: transform 0.3s ease;
+}
+
+footer .btn-outline-dark:hover i {
+  transform: scale(1.2);
+  transition: transform 0.3s ease;
+}
+
+.video-page {
+  width: 100%;
+  padding-top: 154px;
+  max-width: 1200px;
+}
+
+#video-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px 30px;
+  gap: 40px;
+  justify-content: center;
+}
+
+.thumbnail-image {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.thumbnail-image:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.video-item {
+  width: 300px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.video-title {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Media query for screens with a maximum width of 1100px */
+@media (max-width: 992px) {
+  nav .links {
+    margin-left: 0;
+    text-align: center;
+  }
+
+  nav ul hr {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+}
+
+@media (max-width: 1100px) {
+  #Section-2 .content {
+    position: static;
+  }
+  #Section-3 .content {
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  #Section-1 {
+    background-image: url("images/1-mob.webp");
+    height: 680px;
+  }
+
+  #Section-1 svg {
+    position: relative;
+    top: 30px;
+  }
+
+  #Section-2 {
+    background-image: url("images/2-mob.webp");
+    height: 680px;
+  }
+
+  #Section-2 .content {
+    position: relative;
+    bottom: 10%;
+  }
+
+  #Section-3 {
+    background-image: url("images/3-mob.webp");
+    height: 680px;
+  }
+
+  #Section-3 .content {
+    position: relative;
+    left: 0;
+    bottom: 30%;
+  }
+
+  #Section-4 {
+    background-image: url("images/4-mob.webp");
+    height: 680px;
+  }
+
+  #Section-4 .content {
+    position: static;
+  }
+
+  section .main-title {
+    font-size: 5.5rem;
+    line-height: 0.8;
+  }
+
+  section .description {
+    position: relative;
+    bottom: 20px;
+  }
+
+  #Section-4 .description {
+    position: relative;
+    bottom: 60px;
+  }
+}
+
+/* Flower animation */
+.flower {
+  position: fixed;
+  pointer-events: none; /* Ensure flowers do not interfere with mouse events */
+  animation: float 20s linear infinite; /* Adjust animation duration and timing function as needed */
+}
+@keyframes float {
+  0% {
+    transform: translateY(-20vh) rotate(0deg); /* Start just above the viewport */
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(600deg); /* Move well below the viewport */
+    opacity: 0;
+  }
+}
