@@ -265,6 +265,17 @@ footer .btn-outline-dark:hover i {
   font-weight: bold;
 }
 
+.youtube-text {
+  font-size: 1.8rem;
+  color: #000; /* text color */
+  font-weight: 500;
+}
+
+.youtube-icon {
+  color: #ff0000; /* YouTube red */
+  font-size: 2rem;
+}
+
 /* Media query for screens with a maximum width of 1100px */
 @media (max-width: 992px) {
   nav .links {
