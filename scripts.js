@@ -389,9 +389,18 @@
   if (currentPage !== "blog.html") return;
 
   // --- Configuration ---
-  // Default admin credentials (change these as needed)
   var ADMIN_USERNAME = "admin";
   var ADMIN_PASSWORD = "kraft2024";
+
+  // --- Initial/Default Posts (visible to all visitors) ---
+  var INITIAL_POSTS = [
+    {
+      id: 1702000000000,
+      title: "Welcome to Our Craft Blog!",
+      text: "Hi there, crafty friends! Welcome to our creative space where we share tutorials, inspirations, and behind-the-scenes stories of our handcrafted journey. Stay tuned for exciting content coming soon!",
+      image: null,
+    },
+  ];
 
   // --- DOM Elements ---
   var adminToggleBtn = document.getElementById("admin-toggle-btn");
@@ -423,14 +432,40 @@
   function getPosts() {
     try {
       var data = localStorage.getItem("blogPosts");
-      return data ? JSON.parse(data) : [];
+      var storedPosts = data ? JSON.parse(data) : [];
+
+      // Create a map of stored posts by ID for quick lookup
+      var postsMap = {};
+      storedPosts.forEach(function (p) {
+        postsMap[p.id] = p;
+      });
+
+      // Start with initial posts and override with any stored versions
+      var result = [];
+      INITIAL_POSTS.forEach(function (initialPost) {
+        result.push(postsMap[initialPost.id] || initialPost);
+      });
+
+      // Add any custom posts (those not in initial posts)
+      var initialIds = {};
+      INITIAL_POSTS.forEach(function (p) {
+        initialIds[p.id] = true;
+      });
+      storedPosts.forEach(function (p) {
+        if (!initialIds[p.id]) {
+          result.push(p);
+        }
+      });
+
+      return result;
     } catch (e) {
-      return [];
+      return INITIAL_POSTS.slice();
     }
   }
 
   function savePosts(posts) {
     try {
+      // Save all posts to localStorage (including edited initial ones)
       localStorage.setItem("blogPosts", JSON.stringify(posts));
     } catch (e) {
       alert(
