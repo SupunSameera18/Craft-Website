@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Discover a wide range of handcrafted products at Krafts by Lady Sara. From unique home decor to personalized gifts, each item is carefully crafted with love and attention to detail. Shop now and bring a touch of craftsmanship into your life."
+      content="Read the latest blog posts from Kraft Lady by Sara. Discover crafting tips, behind-the-scenes stories, and creative inspiration."
     />
     <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon" />
     <link
@@ -23,9 +23,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <title>Vlog</title>
+    <title>Blog</title>
   </head>
-  <body class="vlog-body">
+  <body class="blog-body">
+    <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
       <a class="navbar-brand" href="index.html"
         ><img src="images/logo-2.png" alt="Kraft Lady by Sara logo"
@@ -85,9 +86,166 @@
       </div>
     </nav>
 
-    <div class="video-page">
-      <div id="video-container">
-        <!-- Video thumbnails and embeds will be dynamically added here -->
+    <!-- Blog Header -->
+    <div class="blog-page">
+      <div class="blog-header">
+        <h1>Blog</h1>
+        <p>Stories, tips, and inspiration from our crafty world.</p>
+        <!-- Admin Login/Logout Button -->
+        <button
+          id="admin-toggle-btn"
+          class="btn btn-sm btn-outline-secondary admin-toggle-btn"
+          title="Admin Login"
+        >
+          <i class="fas fa-user-lock"></i>
+        </button>
+      </div>
+
+      <!-- Login Modal -->
+      <div id="login-modal" class="blog-login-modal" style="display: none">
+        <div class="blog-login-card">
+          <h3>Admin Login</h3>
+          <div class="form-group">
+            <label for="admin-username">Username</label>
+            <input
+              type="text"
+              id="admin-username"
+              class="form-control"
+              placeholder="Username"
+              autocomplete="username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Password</label>
+            <input
+              type="password"
+              id="admin-password"
+              class="form-control"
+              placeholder="Password"
+              autocomplete="current-password"
+            />
+          </div>
+          <p id="login-error" class="text-danger" style="display: none">
+            Invalid username or password.
+          </p>
+          <div class="d-flex justify-content-between">
+            <button id="login-btn" class="btn btn-dark">Login</button>
+            <button id="login-cancel-btn" class="btn btn-outline-secondary">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Panel (visible only when logged in) -->
+      <div id="admin-panel" class="blog-admin-panel" style="display: none">
+        <h3>Create New Post</h3>
+        <div class="form-group">
+          <label for="post-title">Title</label>
+          <input
+            type="text"
+            id="post-title"
+            class="form-control"
+            placeholder="Post title..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="post-text">Content</label>
+          <textarea
+            id="post-text"
+            class="form-control"
+            rows="5"
+            placeholder="Write your post..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="post-image">Image</label>
+          <input
+            type="file"
+            id="post-image"
+            class="form-control-file"
+            accept="image/*"
+          />
+          <div
+            id="image-preview-container"
+            style="display: none; margin-top: 10px"
+          >
+            <img id="image-preview" alt="Preview" class="blog-image-preview" />
+          </div>
+        </div>
+        <button id="publish-btn" class="btn btn-dark">
+          <i class="fas fa-paper-plane"></i> Publish Post
+        </button>
+      </div>
+
+      <!-- Edit Post Modal -->
+      <div id="edit-modal" class="blog-login-modal" style="display: none">
+        <div class="blog-edit-card">
+          <h3>Edit Post</h3>
+          <input type="hidden" id="edit-post-id" />
+          <div class="form-group">
+            <label for="edit-title">Title</label>
+            <input
+              type="text"
+              id="edit-title"
+              class="form-control"
+              placeholder="Post title..."
+            />
+          </div>
+          <div class="form-group">
+            <label for="edit-text">Content</label>
+            <textarea
+              id="edit-text"
+              class="form-control"
+              rows="5"
+              placeholder="Write your post..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-image">Change Image</label>
+            <input
+              type="file"
+              id="edit-image"
+              class="form-control-file"
+              accept="image/*"
+            />
+            <div id="edit-image-preview-container" style="margin-top: 10px">
+              <img
+                id="edit-image-preview"
+                alt="Preview"
+                class="blog-image-preview"
+                style="display: none"
+              />
+              <button
+                id="edit-remove-image-btn"
+                class="btn btn-sm btn-outline-danger mt-2"
+                style="display: none"
+                type="button"
+              >
+                <i class="fas fa-times"></i> Remove Image
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button id="edit-save-btn" class="btn btn-dark">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+            <button id="edit-cancel-btn" class="btn btn-outline-secondary">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Posts Container -->
+      <div id="blog-posts-container">
+        <!-- Posts rendered by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="blog-empty" class="blog-empty" style="display: none">
+        <i class="fas fa-feather-alt"></i>
+        <p>No posts yet. Stay tuned!</p>
       </div>
     </div>
 
@@ -164,6 +322,7 @@
 
       <div class="text-center p-2 mt-3">&copy; 2024 Kraft lady by Sara</div>
     </footer>
+
     <!-- JS Scripts -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
