@@ -378,17 +378,29 @@
 })();
 
 // ===========================
-// Blog System (Blog page only)
+// Blog System (Blog page only) — Firebase Realtime Database
 // ===========================
 (function () {
   if (!document.body.classList.contains("blog-body")) return;
 
-  // --- Configuration ---
+  // --- Firebase Configuration ---
+  var FIREBASE_CONFIG = {
+    apiKey: "AIzaSyBj4a3ydji1bP09sJk5jrqm1TYHwA5_2Bw",
+    authDomain: "kraft-website-4f5dc.firebaseapp.com",
+    databaseURL:
+      "https://kraft-website-4f5dc-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "kraft-website-4f5dc",
+    storageBucket: "kraft-website-4f5dc.firebasestorage.app",
+    messagingSenderId: "400396083422",
+    appId: "1:400396083422:web:68fc22910be7e16a33624f",
+  };
+
+  // --- Admin credentials ---
   var ADMIN_USERNAME = "admin";
   var ADMIN_PASSWORD = "kraft2024";
 
-  // --- Initial/Default Posts (visible to all visitors) ---
-  var INITIAL_POSTS = [
+  // --- Fallback posts (shown when Firebase fails) ---
+  var FALLBACK_POSTS = [
     {
       id: 1702000000000,
       title: "Welcome to Our Craft Blog!",
@@ -396,6 +408,25 @@
       image: null,
     },
   ];
+
+  // --- Initialize Firebase ---
+  var db = null;
+  var postsRef = null;
+  var firebaseReady = false;
+
+  try {
+    if (typeof firebase !== "undefined") {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(FIREBASE_CONFIG);
+      }
+      db = firebase.database();
+      postsRef = db.ref("blogPosts");
+      firebaseReady = true;
+    }
+  } catch (e) {
+    console.error("Firebase init error:", e);
+    firebaseReady = false;
+  }
 
   // --- DOM Elements ---
   var adminToggleBtn = document.getElementById("admin-toggle-btn");
@@ -422,51 +453,86 @@
   // --- State ---
   var isAdmin = sessionStorage.getItem("blogAdmin") === "true";
   var pendingImageData = null;
+  var allPosts = [];
 
-  // --- LocalStorage helpers ---
-  function getPosts() {
-    try {
-      var data = localStorage.getItem("blogPosts");
-      var storedPosts = data ? JSON.parse(data) : [];
-
-      // Create a map of stored posts by ID for quick lookup
-      var postsMap = {};
-      storedPosts.forEach(function (p) {
-        postsMap[p.id] = p;
-      });
-
-      // Start with initial posts and override with any stored versions
-      var result = [];
-      INITIAL_POSTS.forEach(function (initialPost) {
-        result.push(postsMap[initialPost.id] || initialPost);
-      });
-
-      // Add any custom posts (those not in initial posts)
-      var initialIds = {};
-      INITIAL_POSTS.forEach(function (p) {
-        initialIds[p.id] = true;
-      });
-      storedPosts.forEach(function (p) {
-        if (!initialIds[p.id]) {
-          result.push(p);
-        }
-      });
-
-      return result;
-    } catch (e) {
-      return INITIAL_POSTS.slice();
+  // --- Firebase helpers ---
+  function loadPosts(callback) {
+    if (!firebaseReady) {
+      allPosts = FALLBACK_POSTS.slice();
+      callback();
+      return;
     }
+
+    postsRef
+      .once("value")
+      .then(function (snapshot) {
+        var data = snapshot.val();
+        if (data) {
+          allPosts = [];
+          Object.keys(data).forEach(function (key) {
+            var post = data[key];
+            post._key = key;
+            allPosts.push(post);
+          });
+        } else {
+          allPosts = [];
+        }
+        callback();
+      })
+      .catch(function (err) {
+        console.error("Firebase read error:", err);
+        allPosts = FALLBACK_POSTS.slice();
+        callback();
+      });
   }
 
-  function savePosts(posts) {
-    try {
-      // Save all posts to localStorage (including edited initial ones)
-      localStorage.setItem("blogPosts", JSON.stringify(posts));
-    } catch (e) {
-      alert(
-        "Storage is full. Try removing some posts or using smaller images.",
-      );
+  function savePost(post, callback) {
+    if (!firebaseReady) {
+      alert("Database is not available. Please try again later.");
+      return;
     }
+
+    var newRef = postsRef.push();
+    post._key = newRef.key;
+    newRef
+      .set(post)
+      .then(function () {
+        if (callback) callback();
+      })
+      .catch(function (err) {
+        console.error("Firebase write error:", err);
+        alert("Failed to save post. Please try again.");
+      });
+  }
+
+  function updatePost(post, callback) {
+    if (!firebaseReady || !post._key) return;
+
+    postsRef
+      .child(post._key)
+      .set(post)
+      .then(function () {
+        if (callback) callback();
+      })
+      .catch(function (err) {
+        console.error("Firebase update error:", err);
+        alert("Failed to update post. Please try again.");
+      });
+  }
+
+  function removePost(postKey, callback) {
+    if (!firebaseReady || !postKey) return;
+
+    postsRef
+      .child(postKey)
+      .remove()
+      .then(function () {
+        if (callback) callback();
+      })
+      .catch(function (err) {
+        console.error("Firebase delete error:", err);
+        alert("Failed to delete post. Please try again.");
+      });
   }
 
   // --- Image compression via Canvas ---
@@ -534,10 +600,9 @@
 
   // --- Render all posts ---
   function renderPosts() {
-    var posts = getPosts();
     postsContainer.innerHTML = "";
 
-    if (posts.length === 0) {
+    if (allPosts.length === 0) {
       emptyState.style.display = "block";
       return;
     }
@@ -545,7 +610,7 @@
     emptyState.style.display = "none";
 
     // Show newest first
-    posts
+    allPosts
       .slice()
       .sort(function (a, b) {
         return b.id - a.id;
@@ -603,6 +668,7 @@
           var editBtn = document.createElement("button");
           editBtn.className = "blog-edit-btn";
           editBtn.innerHTML = '<i class="fas fa-edit"></i> Edit';
+          editBtn.setAttribute("data-post-key", post._key || "");
           editBtn.setAttribute("data-post-id", post.id);
           editBtn.addEventListener("click", function () {
             var postId = parseInt(this.getAttribute("data-post-id"), 10);
@@ -613,11 +679,15 @@
           var delBtn = document.createElement("button");
           delBtn.className = "blog-delete-btn";
           delBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete';
-          delBtn.setAttribute("data-post-id", post.id);
+          delBtn.setAttribute("data-post-key", post._key || "");
           delBtn.addEventListener("click", function () {
-            var postId = parseInt(this.getAttribute("data-post-id"), 10);
+            var postKey = this.getAttribute("data-post-key");
             if (confirm("Are you sure you want to delete this post?")) {
-              deletePost(postId);
+              removePost(postKey, function () {
+                loadPosts(function () {
+                  renderPosts();
+                });
+              });
             }
           });
           actions.appendChild(delBtn);
@@ -628,26 +698,14 @@
       });
   }
 
-  // --- Delete post ---
-  function deletePost(postId) {
-    var posts = getPosts();
-    posts = posts.filter(function (p) {
-      return p.id !== postId;
-    });
-    savePosts(posts);
-    renderPosts();
-  }
-
   // --- Admin toggle button ---
   adminToggleBtn.addEventListener("click", function () {
     if (isAdmin) {
-      // Logout
       isAdmin = false;
       sessionStorage.removeItem("blogAdmin");
       updateAdminUI();
-      renderPosts(); // Re-render to hide delete buttons
+      renderPosts();
     } else {
-      // Show login modal
       loginModal.style.display = "flex";
       loginError.style.display = "none";
       usernameInput.value = "";
@@ -665,7 +723,7 @@
       sessionStorage.setItem("blogAdmin", "true");
       loginModal.style.display = "none";
       updateAdminUI();
-      renderPosts(); // Re-render to show delete buttons
+      renderPosts();
     } else {
       loginError.style.display = "block";
     }
@@ -673,7 +731,6 @@
 
   loginBtn.addEventListener("click", attemptLogin);
 
-  // Allow Enter key to login
   passwordInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") attemptLogin();
   });
@@ -686,7 +743,6 @@
     loginModal.style.display = "none";
   });
 
-  // Close modal on background click
   loginModal.addEventListener("click", function (e) {
     if (e.target === loginModal) {
       loginModal.style.display = "none";
@@ -733,18 +789,17 @@
       image: pendingImageData || null,
     };
 
-    var posts = getPosts();
-    posts.push(newPost);
-    savePosts(posts);
+    savePost(newPost, function () {
+      postTitleInput.value = "";
+      postTextInput.value = "";
+      postImageInput.value = "";
+      imagePreviewContainer.style.display = "none";
+      pendingImageData = null;
 
-    // Reset form
-    postTitleInput.value = "";
-    postTextInput.value = "";
-    postImageInput.value = "";
-    imagePreviewContainer.style.display = "none";
-    pendingImageData = null;
-
-    renderPosts();
+      loadPosts(function () {
+        renderPosts();
+      });
+    });
   });
 
   // --- Edit Post ---
@@ -765,17 +820,17 @@
   var editImageRemoved = false;
 
   function openEditModal(postId) {
-    var posts = getPosts();
     var post = null;
-    for (var i = 0; i < posts.length; i++) {
-      if (posts[i].id === postId) {
-        post = posts[i];
+    for (var i = 0; i < allPosts.length; i++) {
+      if (allPosts[i].id === postId) {
+        post = allPosts[i];
         break;
       }
     }
     if (!post) return;
 
     editPostIdInput.value = post.id;
+    editPostIdInput.setAttribute("data-post-key", post._key || "");
     editTitleInput.value = post.title;
     editTextInput.value = post.text;
     editImageInput.value = "";
@@ -828,6 +883,7 @@
 
   editSaveBtn.addEventListener("click", function () {
     var postId = parseInt(editPostIdInput.value, 10);
+    var postKey = editPostIdInput.getAttribute("data-post-key");
     var newTitle = editTitleInput.value.trim();
     var newText = editTextInput.value.trim();
 
@@ -843,27 +899,35 @@
       return;
     }
 
-    var posts = getPosts();
-    for (var i = 0; i < posts.length; i++) {
-      if (posts[i].id === postId) {
-        posts[i].title = newTitle;
-        posts[i].text = newText;
-
-        if (editPendingImageData) {
-          posts[i].image = editPendingImageData;
-        } else if (editImageRemoved) {
-          posts[i].image = null;
-        }
+    var post = null;
+    for (var i = 0; i < allPosts.length; i++) {
+      if (allPosts[i].id === postId) {
+        post = allPosts[i];
         break;
       }
     }
+    if (!post) return;
 
-    savePosts(posts);
-    closeEditModal();
-    renderPosts();
+    post.title = newTitle;
+    post.text = newText;
+
+    if (editPendingImageData) {
+      post.image = editPendingImageData;
+    } else if (editImageRemoved) {
+      post.image = null;
+    }
+
+    updatePost(post, function () {
+      closeEditModal();
+      loadPosts(function () {
+        renderPosts();
+      });
+    });
   });
 
   // --- Initialize ---
   updateAdminUI();
-  renderPosts();
+  loadPosts(function () {
+    renderPosts();
+  });
 })();
