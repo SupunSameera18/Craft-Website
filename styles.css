@@ -249,22 +249,67 @@ section .description {
   bottom: 80px;
 }
 
-/* YouTube Link */
-.youtube-text {
-  font-size: 1.8rem;
-  color: #000;
-  font-weight: 500;
-  transition: color var(--transition-base);
+/* YouTube Red Button (Home - Vlog Vibes) */
+.yt-btn-red {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ff0000;
+  color: #fff;
+  font-family: var(--font-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 12px 28px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base);
 }
 
-.youtube-icon {
-  color: var(--color-youtube-red);
-  font-size: 2rem;
-  transition: transform var(--transition-base);
+.yt-btn-red i {
+  font-size: 1.4rem;
 }
 
-a:hover .youtube-icon {
-  transform: scale(1.15);
+.yt-btn-red:hover {
+  background-color: #cc0000;
+  color: #fff;
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
+/* Vlog Channel CTA */
+.vlog-channel-cta {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.vlog-yt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #ff0000;
+  color: #fff;
+  font-family: var(--font-primary);
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.vlog-yt-btn i {
+  font-size: 1.5rem;
+}
+
+.vlog-yt-btn:hover {
+  background-color: #cc0000;
+  color: #fff;
+  text-decoration: none;
+  transform: scale(1.05);
 }
 
 /* ===========================
@@ -310,6 +355,59 @@ footer .btn-outline-dark:hover i {
 }
 
 /* ===========================
+   Placeholder / Coming Soon Pages
+   =========================== */
+.placeholder-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: 100vh;
+}
+
+.coming-soon-page {
+  width: 100%;
+  padding-top: 154px;
+  padding-bottom: 60px;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-soon-content {
+  text-align: center;
+  font-family: var(--font-primary);
+  color: var(--color-text);
+}
+
+.coming-soon-icon {
+  font-size: 4rem;
+  color: var(--color-footer-border);
+  margin-bottom: 20px;
+}
+
+.coming-soon-content h1 {
+  font-family: var(--font-secondary);
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.coming-soon-content p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.coming-soon-sub {
+  font-size: 1rem;
+  color: #888;
+}
+
+/* ===========================
    Vlog / Video Page
    =========================== */
 .vlog-body {
@@ -326,6 +424,23 @@ footer .btn-outline-dark:hover i {
   max-width: 1200px;
 }
 
+.vlog-header {
+  text-align: center;
+  padding: 30px 20px 0;
+  font-family: var(--font-primary);
+}
+
+.vlog-header h1 {
+  font-family: var(--font-secondary);
+  font-size: 2.5rem;
+  color: var(--color-text);
+}
+
+.vlog-header p {
+  color: #888;
+  font-size: 1rem;
+}
+
 #video-container {
   display: flex;
   flex-wrap: wrap;
@@ -339,6 +454,7 @@ footer .btn-outline-dark:hover i {
   text-align: center;
   margin-bottom: 20px;
   cursor: pointer;
+  position: relative;
 }
 
 .thumbnail-image {
@@ -346,6 +462,8 @@ footer .btn-outline-dark:hover i {
   height: auto;
   border-radius: 10px;
   margin-top: 10px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   transition:
     transform var(--transition-base),
     box-shadow var(--transition-base);
@@ -356,11 +474,77 @@ footer .btn-outline-dark:hover i {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
+.video-duration {
+  position: absolute;
+  bottom: 45px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: var(--font-primary);
+}
+
 .video-title {
   margin-top: 10px;
   font-size: 16px;
   color: var(--color-text);
   font-weight: bold;
+}
+
+.video-date {
+  font-size: 13px;
+  color: #999;
+  margin-top: 4px;
+  font-family: var(--font-primary);
+}
+
+/* Vlog Loading / Load More */
+.vlog-loading {
+  text-align: center;
+  padding: 40px 20px;
+  font-family: var(--font-primary);
+  color: #888;
+}
+
+.vlog-loading .spinner {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 3px solid #ddd;
+  border-top-color: var(--color-text);
+  border-radius: 50%;
+  animation: vlog-spin 0.8s linear infinite;
+}
+
+@keyframes vlog-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.vlog-load-more-wrap {
+  text-align: center;
+  padding: 20px 0 50px;
+}
+
+.vlog-load-more-btn {
+  font-family: var(--font-primary);
+  padding: 10px 30px;
+  border: 2px solid var(--color-text);
+  background: transparent;
+  color: var(--color-text);
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-base);
+}
+
+.vlog-load-more-btn:hover {
+  background: var(--color-text);
+  color: var(--color-white);
 }
 
 /* ===========================
