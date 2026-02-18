@@ -9,9 +9,6 @@
 // Flower Animation (Index page only)
 // ===========================
 (function () {
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  if (currentPage !== "index.html") return;
-
   const container = document.getElementById("flower-container");
   if (!container) return;
 
@@ -47,8 +44,7 @@
 // Uses YouTube Data API v3 to auto-fetch videos from @HimeshiThisara
 // ===========================
 (function () {
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  if (currentPage !== "vlog.html") return;
+  if (!document.body.classList.contains("vlog-body")) return;
 
   const videoContainer = document.getElementById("video-container");
   const loadingEl = document.getElementById("vlog-loading");
@@ -385,8 +381,7 @@
 // Blog System (Blog page only)
 // ===========================
 (function () {
-  const currentPage = window.location.pathname.split("/").pop() || "index.html";
-  if (currentPage !== "blog.html") return;
+  if (!document.body.classList.contains("blog-body")) return;
 
   // --- Configuration ---
   var ADMIN_USERNAME = "admin";
