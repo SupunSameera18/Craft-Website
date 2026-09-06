@@ -1,0 +1,8 @@
+{
+  "name": "craft-website",
+  "private": true,
+  "description": "Website for selling arts and crafts",
+  "scripts": {
+    "build": "node build.js"
+  }
+}

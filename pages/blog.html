@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Read the latest blog posts from Kraft Lady by Sara. Discover crafting tips, behind-the-scenes stories, and creative inspiration."
+    />
+    <title>Blog</title>
+<!--@include head-->
+  </head>
+  <body class="blog-body">
+    <!-- Navigation Bar -->
+<!--@include nav-->
+
+    <!-- Blog Header -->
+    <div class="blog-page">
+      <div class="blog-header">
+        <h1>Blog</h1>
+        <p>Stories, tips, and inspiration from our crafty world.</p>
+        <!-- Admin Login/Logout Button -->
+        <button
+          id="admin-toggle-btn"
+          class="btn btn-sm btn-outline-secondary admin-toggle-btn"
+          title="Admin Login"
+        >
+          <i class="fas fa-user-lock"></i>
+        </button>
+      </div>
+
+      <!-- Login Modal -->
+      <div id="login-modal" class="blog-login-modal" style="display: none">
+        <div class="blog-login-card">
+          <h3>Admin Login</h3>
+          <div class="form-group">
+            <label for="admin-username">Email</label>
+            <input
+              type="email"
+              id="admin-username"
+              class="form-control"
+              placeholder="you@example.com"
+              autocomplete="username"
+            />
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Password</label>
+            <input
+              type="password"
+              id="admin-password"
+              class="form-control"
+              placeholder="Password"
+              autocomplete="current-password"
+            />
+          </div>
+          <p id="login-error" class="text-danger" style="display: none">
+            Invalid email or password.
+          </p>
+          <div class="d-flex justify-content-between">
+            <button id="login-btn" class="btn btn-dark">Login</button>
+            <button id="login-cancel-btn" class="btn btn-outline-secondary">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Admin Panel (visible only when logged in) -->
+      <div id="admin-panel" class="blog-admin-panel" style="display: none">
+        <h3>Create New Post</h3>
+        <div class="form-group">
+          <label for="post-title">Title</label>
+          <input
+            type="text"
+            id="post-title"
+            class="form-control"
+            placeholder="Post title..."
+          />
+        </div>
+        <div class="form-group">
+          <label for="post-text">Content</label>
+          <textarea
+            id="post-text"
+            class="form-control"
+            rows="5"
+            placeholder="Write your post..."
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="post-image">Image</label>
+          <input
+            type="file"
+            id="post-image"
+            class="form-control-file"
+            accept="image/*"
+          />
+          <div
+            id="image-preview-container"
+            style="display: none; margin-top: 10px"
+          >
+            <img id="image-preview" alt="Preview" class="blog-image-preview" />
+          </div>
+        </div>
+        <button id="publish-btn" class="btn btn-dark">
+          <i class="fas fa-paper-plane"></i> Publish Post
+        </button>
+      </div>
+
+      <!-- Edit Post Modal -->
+      <div id="edit-modal" class="blog-login-modal" style="display: none">
+        <div class="blog-edit-card">
+          <h3>Edit Post</h3>
+          <input type="hidden" id="edit-post-id" />
+          <div class="form-group">
+            <label for="edit-title">Title</label>
+            <input
+              type="text"
+              id="edit-title"
+              class="form-control"
+              placeholder="Post title..."
+            />
+          </div>
+          <div class="form-group">
+            <label for="edit-text">Content</label>
+            <textarea
+              id="edit-text"
+              class="form-control"
+              rows="5"
+              placeholder="Write your post..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-image">Change Image</label>
+            <input
+              type="file"
+              id="edit-image"
+              class="form-control-file"
+              accept="image/*"
+            />
+            <div id="edit-image-preview-container" style="margin-top: 10px">
+              <img
+                id="edit-image-preview"
+                alt="Preview"
+                class="blog-image-preview"
+                style="display: none"
+              />
+              <button
+                id="edit-remove-image-btn"
+                class="btn btn-sm btn-outline-danger mt-2"
+                style="display: none"
+                type="button"
+              >
+                <i class="fas fa-times"></i> Remove Image
+              </button>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between">
+            <button id="edit-save-btn" class="btn btn-dark">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+            <button id="edit-cancel-btn" class="btn btn-outline-secondary">
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blog Posts Container -->
+      <div id="blog-posts-container">
+        <!-- Posts rendered by JS -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="blog-empty" class="blog-empty" style="display: none">
+        <i class="fas fa-feather-alt"></i>
+        <p>No posts yet. Stay tuned!</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+<!--@include footer-->
+
+    <!-- JS Scripts -->
+<!--@include scripts-common-->
+    <!-- Firebase SDK (compat mode for simplicity) -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script src="js/blog.js"></script>
+  </body>
+</html>

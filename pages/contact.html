@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Discover a wide range of handcrafted products at Krafts by Lady Sara. From unique home decor to personalized gifts, each item is carefully crafted with love and attention to detail. Shop now and bring a touch of craftsmanship into your life."
+    />
+    <title>Contact Form</title>
+<!--@include head-->
+  </head>
+  <body class="contact-body">
+<!--@include nav-->
+
+    <div class="contact-form">
+      <h2>Say Hello!</h2>
+      <form action="https://formspree.io/f/xqakbaez" method="post">
+        <label for="firstName">First Name</label>
+        <input
+          type="text"
+          id="firstName"
+          name="First Name"
+          placeholder="Himeshi"
+          required
+        />
+
+        <label for="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          name="Last Name"
+          placeholder="Thisara"
+          required
+        />
+
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="Email"
+          placeholder="kraftbyladysara@gmail.com"
+          required
+        />
+
+        <label for="mobile">Mobile Number</label>
+        <input
+          type="text"
+          id="mobile"
+          name="Mobile Number"
+          placeholder="070-1234567"
+        />
+
+        <label>Reason <span style="color: red">*</span></label>
+        <div class="reason-options">
+          <label
+            ><input type="radio" name="Reason" value="Contact Me" required />
+            Contact Me</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="Reason"
+              value="Youtube Video Request"
+              required
+            />
+            Youtube Video Request</label
+          >
+          <label
+            ><input
+              type="radio"
+              name="Reason"
+              value="Collaborations"
+              required
+            />
+            Collaborations</label
+          >
+        </div>
+
+        <label for="message"
+          >Your Message <span style="color: red">*</span></label
+        >
+        <textarea id="message" name="Message" rows="4" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+    <!-- Footer -->
+<!--@include footer-->
+    <!-- JS Scripts -->
+<!--@include scripts-common-->
+  </body>
+</html>

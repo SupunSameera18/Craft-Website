@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://supunsameera18.github.io/Craft-Website/sitemap.xml

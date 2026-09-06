@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Discover a wide range of handcrafted products at Krafts by Lady Sara. From unique home decor to personalized gifts, each item is carefully crafted with love and attention to detail. Shop now and bring a touch of craftsmanship into your life."
+    />
+    <title>Vlog</title>
+<!--@include head-->
+  </head>
+  <body class="vlog-body">
+<!--@include nav-->
+
+    <div class="video-page">
+      <div class="vlog-header">
+        <h1>Vlog</h1>
+        <p>Latest videos from our YouTube channel</p>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div id="vlog-loading" class="vlog-loading">
+        <div class="spinner"></div>
+        <p>Loading videos...</p>
+      </div>
+
+      <!-- Channel CTA (shown when API is not configured) -->
+      <div id="vlog-channel-cta" class="vlog-channel-cta" style="display: none">
+        <a
+          href="https://youtube.com/@himeshithisara"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="vlog-yt-btn"
+        >
+          <i class="fab fa-youtube"></i> Visit YouTube Channel for Vlogs
+        </a>
+      </div>
+
+      <div id="video-container">
+        <!-- Video thumbnails will be dynamically added here -->
+      </div>
+
+      <!-- Load More Button -->
+      <div
+        id="vlog-load-more"
+        class="vlog-load-more-wrap"
+        style="display: none"
+      >
+        <button class="vlog-load-more-btn" id="load-more-btn">Load More</button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+<!--@include footer-->
+    <!-- JS Scripts -->
+<!--@include scripts-common-->
+    <script src="js/vlog.js"></script>
+  </body>
+</html>

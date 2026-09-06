@@ -278,6 +278,25 @@ section .description {
   transform: scale(1.05);
 }
 
+/* Blog CTA Button (Home - Tiny Moments) */
+.blog-cta-btn {
+  display: inline-block;
+  background-color: var(--color-s3-text);
+  color: var(--color-white);
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition:
+    background-color var(--transition-base),
+    transform var(--transition-base);
+}
+
+.blog-cta-btn:hover {
+  color: var(--color-white);
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
 /* Vlog Channel CTA */
 .vlog-channel-cta {
   text-align: center;
@@ -384,12 +403,12 @@ footer .btn-outline-dark:hover i {
 
 .coming-soon-icon {
   font-size: 4rem;
-  color: var(--color-footer-border);
+  color: var(--color-text-muted);
   margin-bottom: 20px;
 }
 
 .coming-soon-content h1 {
-  font-family: var(--font-secondary);
+  font-family: var(--font-display);
   font-size: 3rem;
   margin-bottom: 10px;
 }
@@ -431,7 +450,7 @@ footer .btn-outline-dark:hover i {
 }
 
 .vlog-header h1 {
-  font-family: var(--font-secondary);
+  font-family: var(--font-display);
   font-size: 2.5rem;
   color: var(--color-text);
 }
